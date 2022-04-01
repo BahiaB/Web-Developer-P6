@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+/*const mongoose = require("mongoose");
 
 const thingShema = mongoose.Schema({
     title :{type:String , required: true},
@@ -8,4 +8,4 @@ const thingShema = mongoose.Schema({
     prive:{type:Number , required: true},
 });
 
-module.exports = mongoose.model('things', thingShema);
+module.exports = mongoose.model('things', thingShema);*/
