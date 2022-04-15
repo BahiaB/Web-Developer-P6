@@ -8,11 +8,17 @@ const sauceRoutes = require('./routes/sauce')
 const path = require("path");
 const helmet = require ('helmet');
 
-//const Sauce = require('./models/sauce');
+require("dotenv").config();
+
+const DB_USERNAME = process.env.DB_USERNAME;
+const DB_PASSWORD = process.env.DB_PASSWORD;
+const DB_CLUSTER = process.env.DB_CLUSTER;
+const DB_NAME = process.env.DB_NAME;
+
+console.log(DB_USERNAME);
 
 
-
-mongoose.connect('mongodb+srv://bahia:B558b387@cluster0.9xkft.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
+mongoose.connect("mongodb+srv://" + DB_USERNAME + ":" + DB_PASSWORD + "@" + DB_CLUSTER + ".mongodb.net/" + DB_NAME + "?retryWrites=true&w=majority",
   {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -36,6 +42,7 @@ app.use((req, res, next) => {
   //res.json({ message: "requete recue!" })
   next();
 });
+
 app.use(helmet());
 
 app.use(bodyParser.json())

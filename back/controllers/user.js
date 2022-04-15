@@ -3,6 +3,10 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt');
 const User = require("../models/user");
 
+//require("dotenv").config();
+
+//const TOKEN_KEY = process.env.TOKEN_KEY;
+
 //const emailvalidator = require("email-validator");
 //const passwordValidator = require("password-validator");
 
