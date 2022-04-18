@@ -1,3 +1,4 @@
+//Shema de données pour les sauces
 const mongoose = require("mongoose");
 
 const sauceShema = mongoose.Schema({
