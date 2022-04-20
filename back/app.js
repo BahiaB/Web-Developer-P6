@@ -1,14 +1,15 @@
 
-const express = require('express');// importation d'exrpress
+const express = require('express');// importation d'express
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const rateLimit = require("express-rate-limit");
 
 const userRoutes = require('./routes/user');
 const sauceRoutes = require('./routes/sauce')
 const path = require("path");
 const helmet = require('helmet');
 
-// gestion desvariables d'environnement
+// gestion des variables d'environnement
 require("dotenv").config();
 
 const DB_USERNAME = process.env.DB_USERNAME;
@@ -28,8 +29,20 @@ mongoose.connect("mongodb+srv://" + DB_USERNAME + ":" + DB_PASSWORD + "@" + DB_C
 
 
 const app = express();
+
+
+const LimitOfAttempts = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, //Limite chaque adresse IP a 100 requetes par windowMs
+  standardHeaders: true, 
+  legacyHeaders: false, 
+});
+
+
 app.use(express.json());
+app.use(LimitOfAttempts);
 app.use('/images', express.static(path.join(__dirname, 'images')));
+
 
 // Politique de sécurité pour le partage de ressources(cors)
 app.use((req, res, next) => {
@@ -40,8 +53,6 @@ app.use((req, res, next) => {
 });
 
 app.use(helmet()); // Securisation des entete HTTP
-
-app.use(bodyParser.json())
 
 // chemin middleware  utilisateurs/sauces
 app.use('/api/auth', userRoutes);
